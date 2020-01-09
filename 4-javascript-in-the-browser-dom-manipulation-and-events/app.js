@@ -9,13 +9,20 @@ GAME RULES:
 
 */
 
-var scores, roundScores, activePlayer, gamePlaying;
+var scores, roundScores, activePlayer, gamePlaying, previousRoll;
 
 init();
 
 document.querySelector('.btn-roll').addEventListener('click', function () { // Anonymous function
   if (gamePlaying) {
-    var dice = Math.floor(Math.random() * 6) + 1;
+    var dice = Math.floor(Math.random() * 1) + 6;
+
+    if (dice === previousRoll && dice === 6) {
+      scores[activePlayer] = 0;
+      document.getElementById('score-' + activePlayer).textContent = 0;
+      nextPlayer();
+    }
+    previousRoll = dice;
 
     var diceDOM = document.querySelector('.dice');
     diceDOM.style.display = 'block';
@@ -36,7 +43,7 @@ document.querySelector('.btn-hold').addEventListener('click', function () {
 
     document.querySelector('#score-' + activePlayer).textContent = scores[activePlayer];
 
-    if (scores[activePlayer] > 5) {
+    if (scores[activePlayer] > 99) {
       document.querySelector('#name-' + activePlayer).textContent = 'Winner!';
       document.querySelector('.dice').style.display = 'none';
       document.querySelector('.player-' + activePlayer + '-panel').classList.add('winner');
@@ -55,6 +62,7 @@ function init() {
   activePlayer = 0;
   roundScore = 0;
   gamePlaying = true;
+  previousRoll = 0;
 
   document.getElementById('score-0').textContent = '0';
   document.getElementById('score-1').textContent = '0';
@@ -78,6 +86,7 @@ function init() {
 function nextPlayer() {
   activePlayer === 0 ? activePlayer = 1 : activePlayer = 0;
   roundScore = 0;
+  previousRoll = 0;
 
   document.getElementById('current-0').textContent = '0';
   document.getElementById('current-1').textContent = '0';
