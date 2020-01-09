@@ -1,85 +1,25 @@
-///////////////////////////////////////
-// Lecture: Hoisting
+var john = {
+  name: 'John',
+  birthDate: 1997,
+  calculateAge: function() {
+    console.log(this);
+    console.log(2019 - this.birthDate);
+  }
+};
 
-calculateAge(1997);
+john.calculateAge();
 
-function calculateAge(year) {
-  console.log(2019 - year);
-}
+var mike = {
+  name: 'Mike',
+  birthDate: 1990
+};
 
-var retirement = function (year) {
-  console.log(65 - (2019 - year));
-}
-
-retirement(1997);
-
-console.log(age);
-var age = 21;
-console.log(age);
-
-function foo() {
-  var age = 65;
-  console.log(age);
-}
-
-foo();
-console.log(age);
+mike.calculateAge = john.calculateAge;
+mike.calculateAge();
 
 /* Output
+{John}
 22
-43
-undefined
-21
-65
-21
-/*
-
-///////////////////////////////////////
-// Lecture: Scoping
-
-
-// First scoping example
-
-/*
-var a = 'Hello!';
-first();
-
-function first() {
-    var b = 'Hi!';
-    second();
-
-    function second() {
-        var c = 'Hey!';
-        console.log(a + b + c);
-    }
-}
+{Mike}
+29
 */
-
-
-
-// Example to show the differece between execution stack and scope chain
-
-/*
-var a = 'Hello!';
-first();
-
-function first() {
-    var b = 'Hi!';
-    second();
-
-    function second() {
-        var c = 'Hey!';
-        third()
-    }
-}
-
-function third() {
-    var d = 'John';
-    console.log(a + b + c + d);
-}
-*/
-
-
-
-///////////////////////////////////////
-// Lecture: The this keyword
