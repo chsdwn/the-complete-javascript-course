@@ -9,13 +9,13 @@ GAME RULES:
 
 */
 
-var scores, roundScores, activePlayer, gamePlaying, previousRoll;
+var scores, roundScores, activePlayer, gamePlaying, previousRoll, winningScore;
 
 init();
 
 document.querySelector('.btn-roll').addEventListener('click', function () { // Anonymous function
   if (gamePlaying) {
-    var dice = Math.floor(Math.random() * 1) + 6;
+    var dice = Math.floor(Math.random() * 6) + 1;
 
     if (dice === previousRoll && dice === 6) {
       scores[activePlayer] = 0;
@@ -43,7 +43,7 @@ document.querySelector('.btn-hold').addEventListener('click', function () {
 
     document.querySelector('#score-' + activePlayer).textContent = scores[activePlayer];
 
-    if (scores[activePlayer] > 99) {
+    if (scores[activePlayer] >= winningScore) {
       document.querySelector('#name-' + activePlayer).textContent = 'Winner!';
       document.querySelector('.dice').style.display = 'none';
       document.querySelector('.player-' + activePlayer + '-panel').classList.add('winner');
@@ -81,6 +81,12 @@ function init() {
   document.querySelector('.player-1-panel').classList.remove('active');
 
   document.querySelector('.player-0-panel').classList.add('active');
+
+  var scoreInput = document.getElementById('winning-score');
+  winningScore === undefined ? winningScore = 100 : winningScore = scoreInput.value;
+  scoreInput.placeholder = 'Winning score set to ' + winningScore + '...';
+  scoreInput.value = '';
+  console.log(winningScore);
 }
 
 function nextPlayer() {
