@@ -1,53 +1,70 @@
-var john = {
-  name: 'John',
-  age: 26,
-  job: 'teacher',
-  presentation: function(style, timeOfDay) {
-    if (style === 'formal') {
-      console.log('Good ' + timeOfDay + ', ladies and gentlemen! I\' ' 
-        + this.name + ', I\'m a ' + this.job + ' and I\' ' + this.age + ' years old.');
-    } else if (style === 'friendly') {
-      console.log('Hey! What\'s up? I\' ' + this.name + ', I\'m a ' 
-        + this.job + ' and I\' ' + this.age + ' years old. Have a nice ' + timeOfDay + '.');
+(function () {
+  var questions, randomQuestion, answer;
+
+  var Question = function (question, answers, correctAnswer) {
+    this.question = question;
+    this.answers = answers;
+    this.correctAnswer = correctAnswer;
+  }
+
+  var question1 = new Question(
+    'Which company created Windows operating system?',
+    ['Apple', 'Microsoft', 'Sony'],
+    1
+  );
+
+  var question2 = new Question(
+    'Is JavaScript related to Java?',
+    ['Yes', 'No'],
+    1
+  );
+
+  var question3 = new Question(
+    'Which one is not a JavaScript framework?',
+    ['TypeScript', 'React', 'Angular'],
+    0
+  );
+
+  questions = [question1, question2, question3];
+  
+  function showQuestion() {
+    randomQuestion = questions[Math.floor(Math.random() * 3)];
+    console.log(randomQuestion.question);
+    for (var i = 0; i < randomQuestion.answers.length; i++) {
+      console.log(i + ': ' + randomQuestion.answers[i]);
+    }
+    answerQuestion();
+    console.log('***************************');
+  }
+
+  function answerQuestion() {
+    answer = prompt('What is your answer')
+    if (answer == randomQuestion.correctAnswer) {
+      console.log('Correct answer');
+      increaseScore()(true);
+    } else {
+      console.log('Wrong answer');
+      increaseScore()(false);
     }
   }
-};
 
-var emily = {
-  name: 'Emily',
-  age: 35,
-  job: 'designer'
-};
-
-john.presentation('formal', 'morning');
-john.presentation.call(emily, 'friendly', 'afternoon');
-
-var johnFriendly = john.presentation.bind(john, 'friendly');
-johnFriendly('morning');
-johnFriendly('night');
-
-var emilyFormal = john.presentation.bind(emily, 'formal');
-emilyFormal('afternoon');
-
-
-var years = [1990, 1965, 1937, 2005, 1998];
-
-function arrayCalc(arr, fn) {
-  var arrRes = [];
-  for (var i = 0; i < arr.length; i++) {
-    arrRes.push(fn(arr[i]));
+  function increaseScore() {
+    var score = 0;
+    return function(correct) {
+      if (correct) {
+        score++;
+        console.log('Score: ' + score);
+      } else {
+        console.log('Score: ' + score);
+      }
+    }
   }
-  return arrRes;
-}
 
-function calculateAge(el) {
-  return 2020 - el;
-}
-
-function isFullAge(limit, el) {
-  return el >= limit;
-}
-
-var ages = arrayCalc(years, calculateAge);
-// isFullAge.bind(Object, limit, el)
-var fullJapan = arrayCalc(ages, isFullAge.bind(this, 20));
+  for (;;) {
+    if (answer === 'exit') {
+      break;
+    } else {
+      showQuestion();
+    }
+  }
+})();
