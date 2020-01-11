@@ -1,27 +1,25 @@
+// BUDGET CONTROLLER
 var budgetController = (function() {
-  var x = 23;
 
-  var add = function(a) {
-    return x + a;
-  }
-
-  return {
-    publicTest: function(b) {
-      return add(b);
-    }
-  }
 })();
 
+// UI CONTROLLER
 var UIController = (function() {
 
 })();
 
+// GLOBAL APP CONTROLLER
 var controller = (function(budgetCtrl, UICtrl) {
-  var z = budgetCtrl.publicTest(5);
+  var ctrlAddItem = function() {
 
-  return {
-    anotherPublic: function() {
-      console.log(z);
+  };
+  
+  document.querySelector('.add__btn').addEventListener('click', ctrlAddItem);
+
+  document.addEventListener('keypress', function(event) {
+    // event.which for older browsers
+    if (event.keyCode === 13 || event.which === 13) {
+      ctrlAddItem();
     }
-  }
+  });
 })(budgetController, UIController);
