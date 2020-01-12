@@ -175,6 +175,11 @@ var UIController = (function () {
       } else {
         document.querySelector(DOMstrings.percentageLabel).textContent = '---';
       }
+    },
+    deleteListItem: function (selectorID) {
+      // In JavaScript a DOM element can't be deleted directly. Only a child element can be deleted.
+      var el = document.getElementById(selectorID);
+      el.parentNode.removeChild(el);
     }
   };
 })();
@@ -231,6 +236,10 @@ var controller = (function (budgetCtrl, UICtrl) {
       ID = parseInt(splitID[1]);
 
       budgetCtrl.deleteItem(type, ID);
+
+      UICtrl.deleteListItem(itemID);
+
+      updateBudget();
     }
   }
 
