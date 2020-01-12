@@ -90,7 +90,8 @@ var UIController = (function () {
     budgetLabel: '.budget__value',
     incomeLabel: '.budget__income--value',
     expensesLabel: '.budget__expenses--value',
-    percentageLabel: '.budget__expenses--percentage'
+    percentageLabel: '.budget__expenses--percentage',
+    container: '.container'
   }
 
   return {
@@ -110,7 +111,7 @@ var UIController = (function () {
       if (type === 'inc') {
         element = DOMstrings.incomeContainer;
         html = `
-        <div class="item clearfix" id="income-%id%">
+        <div class="item clearfix" id="inc-%id%">
           <div class="item__description">%description%</div>
           <div class="right clearfix">
             <div class="item__value">%value%</div>
@@ -122,7 +123,7 @@ var UIController = (function () {
       } else if (type === 'exp') {
         element = DOMstrings.expensesContainer;
         html = `
-        <div class="item clearfix" id="expense-%id%">
+        <div class="item clearfix" id="exp-%id%">
           <div class="item__description">%description%</div>
           <div class="right clearfix">
             <div class="item__value">- %value%</div>
@@ -155,7 +156,7 @@ var UIController = (function () {
       document.querySelector(DOMstrings.budgetLabel).textContent = obj.budget;
       document.querySelector(DOMstrings.incomeLabel).textContent = obj.totalInc;
       document.querySelector(DOMstrings.expensesLabel).textContent = obj.totalExp;
-      
+
       if (obj.percentage > 0) {
         document.querySelector(DOMstrings.percentageLabel).textContent = obj.percentage + '%';
       } else {
@@ -178,6 +179,8 @@ var controller = (function (budgetCtrl, UICtrl) {
         ctrlAddItem();
       }
     });
+
+    document.querySelector(DOM.container).addEventListener('click', ctrlDeleteItem);
   }
 
   var updateBudget = function () {
@@ -201,6 +204,22 @@ var controller = (function (budgetCtrl, UICtrl) {
       updateBudget();
     }
   };
+
+  var ctrlDeleteItem = function (event) {
+    //                 icon < button < item__delete < right < item#income-ID < ID
+    // console.log(event.target.parentNode.parentNode.parentNode.parentNode.id);
+
+    var itemID, splitID, type, ID;
+    itemID = event.target.parentNode.parentNode.parentNode.parentNode.id;
+
+    if (itemID) {
+      splitID = itemID.split('-');
+      type = splitID[0];
+      ID = splitID[1];
+
+
+    }
+  }
 
   return {
     init: function () {
