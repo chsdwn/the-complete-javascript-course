@@ -129,7 +129,8 @@ var UIController = (function () {
     expensesLabel: '.budget__expenses--value',
     percentageLabel: '.budget__expenses--percentage',
     container: '.container',
-    expensesPercLabel: '.item__percentage'
+    expensesPercLabel: '.item__percentage',
+    dateLabel: '.budget__title--month'
   }
 
   var formatNumber = function (num, type) {
@@ -184,7 +185,7 @@ var UIController = (function () {
         <div class="item clearfix" id="exp-%id%">
           <div class="item__description">%description%</div>
           <div class="right clearfix">
-            <div class="item__value">- %value%</div>
+            <div class="item__value">%value%</div>
             <div class="item__percentage">21%</div>
             <div class="item__delete">
               <button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button>
@@ -240,6 +241,16 @@ var UIController = (function () {
           current.textContent = '---';
         }
       });
+    },
+    displayMonth: function () {
+      var now, months, month, year;
+
+      now = new Date();
+      months = ['Jan', 'Jeb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+      month = now.getMonth();
+      year = now.getFullYear();
+
+      document.querySelector(DOMstrings.dateLabel).textContent = months[month] + ' ' + year;
     },
     deleteListItem: function (selectorID) {
       // In JavaScript a DOM element can't be deleted directly. Only a child element can be deleted.
@@ -328,6 +339,7 @@ var controller = (function (budgetCtrl, UICtrl) {
         totalExp: 0,
         percentage: -1
       });
+      UICtrl.displayMonth();
       setupEventListeners();
     }
   }
