@@ -1,21 +1,23 @@
-// Lecture: Strings
+// Lecture: Arrow functions
 
-let firstName = 'john';
-let lastName = 'smith';
-const yearOfBirth = 1990;
-function calcAge(year) {
-  return 2020 - year;
-}
+const years = [1990, 1965, 1982, 1952];
 
 // ES5
-console.log('This is ' + firstName + ' ' + lastName + '. ' + calcAge(yearOfBirth) + ' years old.');
+var ages5 = years.map(function (el) {
+  return 2020 - el;
+});
+console.log(ages5);
 
 // ES6
-console.log(`This is ${firstName} ${lastName}. ${calcAge(yearOfBirth)} years old.`);
+let ages6 = years.map(el => 2020 - el);
+console.log(ages6);
 
-const n = `${firstName} ${lastName}`;
-console.log(n.startsWith('j'));
-console.log(n.endsWith('h'));
-console.log(n.includes('oh'));
-console.log(n.includes(' smi'));
-console.log(`${firstName} `.repeat(5));
+ages6 = years.map((el, index) => `age element ${index + 1}: ${2020 - el}.`);
+console.log(ages6);
+
+ages6 = years.map((el, index) => {
+  const now = new Date().getFullYear();
+  const age = now - el;
+  return `age element ${index + 1}: ${age}.`;
+});
+console.log(ages6);
