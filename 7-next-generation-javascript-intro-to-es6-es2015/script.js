@@ -1,33 +1,40 @@
-// Lecture: Maps
+// Lecture: Classes
 
-const question = new Map();
-question.set('question', 'What is the official name of the latest major JavaScript version?');
-question.set(1, 'ES5');
-question.set(2, 'ES6');
-question.set(3, 'ES2015');
-question.set(4, 'ES7');
-question.set('correct', 3);
-question.set(true, 'Correct answer.');
-question.set(false, 'Wrong answer.');
-console.log(question);
-
-console.log(question.get('question'));
-console.log(question.size);
-
-if (question.has(4)) {
-  //question.delete(4);
+// ES5
+var Person5 = function (name, yearOfBirth, job) {
+  this.name = name;
+  this.yearOfBirth = yearOfBirth;
+  this.job = job;
 }
-//question.clear();
 
-question.forEach((value, key) => {
-  console.log(`Key: ${key}, value: ${value}`);
-})
+Person5.prototype.calculateAge = function () {
+  var age = new Date().getFullYear() - this.yearOfBirth;
+  console.log(age);
+}
 
-for (let [key, value] of question.entries()) {
-  if (typeof(key) === 'number') {
-    console.log(`Answer ${key}: ${value}`);
+var john5 = new Person5('John', 1990, 'teacher');
+john5;
+john5.calculateAge();
+
+// ES6
+class Person6 {
+  constructor (name, yearOfBirth, job) {
+    this.name = name;
+    this.yearOfBirth = yearOfBirth;
+    this.job = job;
+  }
+
+  calculateAge() {
+    return new Date().getFullYear() - this.yearOfBirth;
+  }
+
+  static greeting() {
+    console.log('Hey there!');
   }
 }
 
-const ans = parseInt(prompt('Answer?'));
-console.log(question.get(ans === question.get('correct')));
+const john6 = new Person6('John', 1990, 'teacher');
+john6;
+console.log(john6.calculateAge());
+
+Person6.greeting();
