@@ -1,28 +1,23 @@
-// Lecture: Spread operator
-
-function addFourAges(a, b, c, d) {
-  return a + b + c + d;
-}
-
-var sum = addFourAges(18, 30, 12, 21);
-console.log(sum);
+// Lecture: Rest parameters
 
 // ES5
-var ages = [18, 30, 12, 21];
-var sum5 = addFourAges.apply(null, ages);
-console.log(sum5);
+function isFullAge5(limit) {
+  var argsArr = Array.prototype.slice.call(arguments, 1);
+  console.log(argsArr);
+
+  argsArr.forEach(function (cur) {
+    console.log((2020 - cur) >= limit);
+  })
+}
+
+isFullAge5(21, 1990, 2004, 1965);
+isFullAge5(18, 1990, 2004, 1965, 2016, 1987);
 
 // ES6
-const sum6 = addFourAges(...ages);
-console.log(sum6);
+function isFullAge6(limit, ...years) {
+  years.forEach(cur => {
+    console.log((2020 - cur) >= limit)
+  });
+}
 
-const familySmith = ['John', 'Jane', 'Mark'];
-const familyMiller = ['Mary', 'Bob', 'Ann'];
-const bigFamily = [...familySmith, 'Ali', ...familyMiller];
-console.log(bigFamily);
-
-const h = document.querySelector('h1');
-const boxes = document.querySelectorAll('.box');
-const all = [h, ...boxes];
-
-Array.from(all).forEach(cur => cur.style.color = 'purple');
+isFullAge6(18, 1990, 2004, 1965);
