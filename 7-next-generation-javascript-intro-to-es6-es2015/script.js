@@ -1,30 +1,33 @@
-// Lecture: Default parameters
+// Lecture: Maps
 
-// ES5
-function SmithPerson5(firstName, yearOfBirth, lastName, nationality) {
-  lastName === undefined ? lastName = 'Smith' : lastName = lastName;
-  nationality === undefined ? nationality = 'american' : nationality = nationality;
+const question = new Map();
+question.set('question', 'What is the official name of the latest major JavaScript version?');
+question.set(1, 'ES5');
+question.set(2, 'ES6');
+question.set(3, 'ES2015');
+question.set(4, 'ES7');
+question.set('correct', 3);
+question.set(true, 'Correct answer.');
+question.set(false, 'Wrong answer.');
+console.log(question);
 
-  this.firstName = firstName;
-  this.lastName = lastName;
-  this.yearOfBirth = yearOfBirth;
-  this.nationality = nationality;
+console.log(question.get('question'));
+console.log(question.size);
+
+if (question.has(4)) {
+  //question.delete(4);
+}
+//question.clear();
+
+question.forEach((value, key) => {
+  console.log(`Key: ${key}, value: ${value}`);
+})
+
+for (let [key, value] of question.entries()) {
+  if (typeof(key) === 'number') {
+    console.log(`Answer ${key}: ${value}`);
+  }
 }
 
-var john = new SmithPerson5('John', 1990);
-console.log(john);
-var emily = new SmithPerson5('Emily', 1983, 'Diaz', 'spanish');
-console.log(emily);
-
-// ES6
-function SmithPerson6(firstName, yearOfBirth, lastName = 'Smith', nationality = 'american') {
-  this.firstName = firstName;
-  this.lastName = lastName;
-  this.yearOfBirth = yearOfBirth;
-  this.nationality = nationality;
-}
-
-var john = new SmithPerson6('John', 1990);
-console.log(john);
-var emily = new SmithPerson6('Emily', 1983, 'Diaz', 'spanish');
-console.log(emily);
+const ans = parseInt(prompt('Answer?'));
+console.log(question.get(ans === question.get('correct')));
