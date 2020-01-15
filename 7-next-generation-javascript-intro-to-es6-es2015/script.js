@@ -1,23 +1,30 @@
-// Lecture: Rest parameters
+// Lecture: Default parameters
 
 // ES5
-function isFullAge5(limit) {
-  var argsArr = Array.prototype.slice.call(arguments, 1);
-  console.log(argsArr);
+function SmithPerson5(firstName, yearOfBirth, lastName, nationality) {
+  lastName === undefined ? lastName = 'Smith' : lastName = lastName;
+  nationality === undefined ? nationality = 'american' : nationality = nationality;
 
-  argsArr.forEach(function (cur) {
-    console.log((2020 - cur) >= limit);
-  })
+  this.firstName = firstName;
+  this.lastName = lastName;
+  this.yearOfBirth = yearOfBirth;
+  this.nationality = nationality;
 }
 
-isFullAge5(21, 1990, 2004, 1965);
-isFullAge5(18, 1990, 2004, 1965, 2016, 1987);
+var john = new SmithPerson5('John', 1990);
+console.log(john);
+var emily = new SmithPerson5('Emily', 1983, 'Diaz', 'spanish');
+console.log(emily);
 
 // ES6
-function isFullAge6(limit, ...years) {
-  years.forEach(cur => {
-    console.log((2020 - cur) >= limit)
-  });
+function SmithPerson6(firstName, yearOfBirth, lastName = 'Smith', nationality = 'american') {
+  this.firstName = firstName;
+  this.lastName = lastName;
+  this.yearOfBirth = yearOfBirth;
+  this.nationality = nationality;
 }
 
-isFullAge6(18, 1990, 2004, 1965);
+var john = new SmithPerson6('John', 1990);
+console.log(john);
+var emily = new SmithPerson6('Emily', 1983, 'Diaz', 'spanish');
+console.log(emily);
