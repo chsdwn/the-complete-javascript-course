@@ -23,7 +23,27 @@
         })
         .catch(error => console.log(error));
     }
-    getUser(5);
+    getUser(7);
+
+    async function getUserAW(userId) {
+      try {
+        const result = await fetch('https://jsonplaceholder.typicode.com/users');
+        const data = await result.json();
+        const user = data[userId];
+        console.log(`Name: ${user.name}`);
+        return user;
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    getUserAW(9);
+    
+    let user5;
+    getUserAW(5)
+      .then(user => {
+        user5 = user;
+      });
+    console.log(user5);
   </script>
 </body>
 
