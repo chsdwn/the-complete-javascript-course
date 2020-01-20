@@ -11,23 +11,46 @@
 <body>
   <h1>Asynchronous JavaScript</h1>
   <script>
-    function getRecipe() {
-      setTimeout(() => {
-        const recipeID = [523, 238, 485, 859];
-        console.log(recipeID);
-
-        setTimeout(id => {
-          const recipe = {title: 'Makarna', publisher: 'Ali'};
-          console.log(`${id}: ${recipe.title}`);
-
-          setTimeout(publisher => {
-            const recipe = {title: 'Etliekmek', publisher: 'Ali'};
-            console.log(recipe);
-          }, 1500, recipe.publisher);
-        }, 1500, recipeID[2]);
+    const getIDs = new Promise((resolve, reject) => {
+      setTimeout(()  => {
+        resolve([252, 823, 782, 923]);
+        //reject('an error');
       }, 1500);
+    });
+
+    const getRecipe = recID => {
+      return new Promise((resolve, reject) => {
+        setTimeout(ID => {
+          const recipe = {title: 'Makarna', publisher: 'Ali'};  
+          resolve(`${ID}: ${recipe.title}`);
+        }, 1500, recID);
+      });
     }
-    getRecipe();
+
+    const getRelated = publisher => {
+      return new Promise((resolve, reject) => {
+        setTimeout(pub => {
+          const recipe = {title: 'Etliekmek', publisher: 'Ali'};
+          resolve(`${pub}: ${recipe.title}`)
+        }, 1500, publisher);
+      })
+    };
+
+    getIDs
+      .then(IDs => {
+        console.log(IDs);
+        return getRecipe(IDs[2]);
+      })
+      .then(recipe => {
+        console.log(recipe);
+        return getRelated('Ali');
+      })
+      .then(recipe => {
+        console.log(recipe);
+      })
+      .catch(error => {
+        console.log('error', error);
+      });
   </script>
 </body>
 
