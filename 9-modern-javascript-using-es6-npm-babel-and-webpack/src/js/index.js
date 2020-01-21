@@ -1,6 +1,14 @@
-import str from './models/Search';
-// import { add as a, multiply as m, ID } from './views/searchView';
-import * as searchView from './views/searchView';
+import axios from 'axios';
+// d4f9ceaa577e45288b641d3b0c08c0bd
 
-//console.log(`imported funcs ${a(ID, 2)}, ${m(3, 5)}, ${str}`);
-console.log(`imported funcs ${searchView.add(searchView.ID, 2)}, ${searchView.multiply(3, 5)}, ${str}`);
+async function getResults(query) {
+  const key = 'd4f9ceaa577e45288b641d3b0c08c0bd';
+  try {
+    const res = await axios(`https://forkify-api.herokuapp.com/api/search?q=${query}`);
+    const recipes = res.data.recipes;
+    console.log(recipes);
+  } catch(error) {
+    console.log(error);
+  }
+}
+getResults('pasta');
