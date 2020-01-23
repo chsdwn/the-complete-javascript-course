@@ -8,7 +8,8 @@ export const clearInput = () => {
 
 export const clearResults = () => {
   elements.searchResList.innerHTML = '';
-}
+  elements.searchResPages.innerHTML = '';
+};
 
 /*
 * 'Pasta with tomata and spinach'
@@ -33,19 +34,9 @@ const limitRecipeTitle = (title, limit = 17) => {
     return `${newTitle.join(' ')}...`;
   }
   return title;
-}
+};
 
 const renderRecipe = recipe => {
-  `
-  publisher: "101 Cookbooks"
-  title: "Best Pizza Dough Ever"
-  source_url: "http://www.101cookbooks.com/archives/001199.html"
-  recipe_id: "47746"
-  image_url: "http://forkify-api.herokuapp.com/images/best_pizza_dough_recipe1b20.jpg"
-  social_rank: 100
-  publisher_url: "http://www.101cookbooks.com"
-  `
-
   const markup = `
     <li>
       <a class="results__link" href="#${recipe.recipe_id}">
@@ -62,8 +53,40 @@ const renderRecipe = recipe => {
   elements.searchResList.insertAdjacentHTML('beforeend', markup);
 };
 
-export const renderResults = recipes => {
+const createButton = (page, type) => `
+<button class="btn-inline results__btn--${type}" data-goto="${type === 'prev' ? page - 1 : page + 1}">
+  <span>Page ${type === 'prev' ? page - 1 : page + 1}</span>
+  <svg class="search__icon">
+    <use href="img/icons.svg#icon-triangle-${type === 'prev' ? 'left' : 'right'}"></use>
+  </svg>
+</button>
+`;
+
+const renderButtons = (page, numResults, resPerPage) => {
+  const pages = Math.ceil(numResults / resPerPage);
+  
+  let button;
+  if (page === 1 && pages > 1) {
+    button = createButton(page, 'next');
+  } else if (page < pages) {
+    button = `
+    ${createButton(page, 'prev')}
+    ${createButton(page, 'next')}
+    `;
+  } else if (page === pages && pages > 1) {
+    button = createButton(page, 'prev');
+  }
+
+  elements.searchResPages.insertAdjacentHTML('afterbegin', button);
+};
+
+export const renderResults = (recipes, page = 1, resPerPage = 10) => {
   if (recipes) {
-    recipes.forEach(renderRecipe);
+    const start = (page - 1) * resPerPage;
+    const end = resPerPage * page;
+
+    recipes.slice(start, end).forEach(renderRecipe);
+
+    renderButtons(page, recipes.length, resPerPage);
   }
 };
