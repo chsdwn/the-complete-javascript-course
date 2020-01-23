@@ -25,6 +25,6 @@ export default class Recipe {
   }
 
   calcServings() {
-    this.servings = Math.floor((Math.random * 4) + 1);
+    this.servings = Math.floor((Math.random() * 4) + 1);
   }
 }
